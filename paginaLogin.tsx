@@ -30,7 +30,7 @@ export function Login() {
             <Text style={{textAlign: 'center',fontWeight: 'bold', paddingBottom: 6,}}>Qual seu login e senha?</Text>
             <TextInput style={styles.input} placeholder="Login:" ></TextInput>
             <TextInput style={styles.input} placeholder="Senha:" ></TextInput>
-            <TouchableOpacity style={styles.button}onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity style={styles.button}onPress={() => navigation.navigate('Incluir')}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
         </View>
