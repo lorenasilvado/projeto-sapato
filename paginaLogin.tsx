@@ -30,7 +30,7 @@ export function Login() {
             <Text style={{textAlign: 'center',fontWeight: 'bold', paddingBottom: 6,}}>Qual seu login e senha?</Text>
             <TextInput style={styles.input} placeholder="Login:" ></TextInput>
             <TextInput style={styles.input} placeholder="Senha:" ></TextInput>
-            <TouchableOpacity style={styles.button}onPress={() => navigation.navigate('Incluir')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
         </View>
@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F8F9FA',
         borderRadius: 12,
         padding: 16,
-        elevation: 2, // sombra Android
-        shadowColor: '#000', // sombra iOS
+        elevation: 2, 
+        shadowColor: '#000', 
         shadowOpacity: 0.1,
         shadowRadius: 4,
     },

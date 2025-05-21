@@ -1,7 +1,9 @@
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Image } from 'expo-image';
+import { useSapatosStore } from './src/store/useSapatosStore';
 
 type Props = {
   selectedImage?: string;
@@ -14,9 +16,19 @@ function ImageViewer({ selectedImage }: Props) {
 }
 
 export function IncluirSapato() {
+  const navigation = useNavigation();
   const [selectedImages, setSelectedImages] = useState<ImagePicker.ImagePickerAsset[]>([]);
-  const [firstField, setFirstField] = useState<string>(''); 
-  const [secondField, setSecondField] = useState<string>(''); 
+  const [precoCusto, setPrecoCusto] = useState<string>(''); 
+  const [precoVenda, setPrecoVenda] = useState<string>(''); 
+  const { addSapatos } = useSapatosStore();
+
+  const addSapato = () => {
+    const imagens = selectedImages.map((selectedImage) => selectedImage.uri)
+    const custo = Number(precoCusto)
+    const venda = Number(precoVenda)
+    addSapatos({precoCusto: custo, precoVenda: venda, imagens: imagens})
+    navigation.goBack()
+  }
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -28,8 +40,8 @@ export function IncluirSapato() {
 
     if (!result.canceled) {
       setSelectedImages(result.assets);
-      setFirstField('');
-      setSecondField('');
+      setPrecoCusto('');
+      setPrecoVenda('');
       console.log(result);
     } else {
       alert('Você não escolheu nenhuma foto!');
@@ -47,14 +59,14 @@ export function IncluirSapato() {
                 <TextInput
                   style={styles.input}
                   placeholder="Preço de custo"
-                  value={firstField}
-                  onChangeText={setFirstField}
+                  value={precoCusto}
+                  onChangeText={setPrecoCusto}
                 />
                 <TextInput
                   style={styles.input}
                   placeholder="Preço á venda"
-                  value={secondField}
-                  onChangeText={setSecondField}
+                  value={precoVenda}
+                  onChangeText={setPrecoVenda}
                 />
               </View>
             )}
@@ -62,7 +74,10 @@ export function IncluirSapato() {
         ))}
       </ScrollView>
       <TouchableOpacity style={styles.button} onPress={pickImageAsync}>
-        <Text style={styles.buttonText}>Incluir sapato</Text>
+        <Text style={styles.buttonText}>Incluir imagem</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonFinalizar} onPress={addSapato}>
+        <Text style={styles.buttonText}>Finalizar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -83,6 +98,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 24,
     paddingHorizontal: 112,
+  },
+  buttonFinalizar:{
+    backgroundColor: '#2D6A4F',
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 16,
+    paddingHorizontal: 136,
   },
   buttonText: {
     color: '#fff',
