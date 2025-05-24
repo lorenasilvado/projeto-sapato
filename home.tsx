@@ -14,7 +14,8 @@ export function Home() {
                 <ScrollView>
                     {sapatos.map((sapato, index) =>
                     (
-                        <View key={index}>
+                        <View key={index} style={styles.informacaoTela}>
+                            <Text>Nome: {sapato.nome}</Text>
                             <Image source={sapato.imagens[0]} style={styles.image} />
                             <Text>Preço Custo: {sapato.precoCusto}</Text>
                             <Text>Preço Venda: {sapato.precoVenda}</Text>
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 24,
         paddingHorizontal: 112,
+        marginBottom: 12,
     },
     container: {
         alignItems: 'center',
@@ -54,5 +56,8 @@ const styles = StyleSheet.create({
         height: 340,
         borderRadius: 18,
         margin: 5,
+    },
+    informacaoTela: {
+        marginTop: 30,
     },
 })

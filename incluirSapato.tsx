@@ -18,15 +18,16 @@ function ImageViewer({ selectedImage }: Props) {
 export function IncluirSapato() {
   const navigation = useNavigation();
   const [selectedImages, setSelectedImages] = useState<ImagePicker.ImagePickerAsset[]>([]);
-  const [precoCusto, setPrecoCusto] = useState<string>(''); 
-  const [precoVenda, setPrecoVenda] = useState<string>(''); 
+  const [nome, setNome] = useState<string>('');
+  const [precoCusto, setPrecoCusto] = useState<string>('');
+  const [precoVenda, setPrecoVenda] = useState<string>('');
   const { addSapatos } = useSapatosStore();
 
   const addSapato = () => {
     const imagens = selectedImages.map((selectedImage) => selectedImage.uri)
     const custo = Number(precoCusto)
     const venda = Number(precoVenda)
-    addSapatos({precoCusto: custo, precoVenda: venda, imagens: imagens})
+    addSapatos({ nome: nome, precoCusto: custo, precoVenda: venda, imagens: imagens })
     navigation.goBack()
   }
 
@@ -50,29 +51,39 @@ export function IncluirSapato() {
 
   return (
     <View style={styles.tela}>
-      <ScrollView horizontal>
-        {selectedImages.map((selectedImage, index) => (
-          <View key={index} style={styles.imageContainer}>
-            <ImageViewer key ={index} selectedImage={selectedImage.uri} />
-            {index === 0 && (
-              <View style={styles.inputRow}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Preço de custo"
-                  value={precoCusto}
-                  onChangeText={setPrecoCusto}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Preço á venda"
-                  value={precoVenda}
-                  onChangeText={setPrecoVenda}
-                />
+      {selectedImages.length > 0 && (
+        <View>
+          <TextInput
+              style={styles.nomeInput}
+              placeholder="Nome do sapato"
+              value={nome}
+              onChangeText={setNome}
+            />
+          <ScrollView horizontal style={styles.scrollView}>
+            {selectedImages.map((selectedImage, index) => (
+              <View key={index} style={styles.imageContainer}>
+                <ImageViewer key={index} selectedImage={selectedImage.uri} />
               </View>
-            )}
-          </View>
-        ))}
-      </ScrollView>
+            ))}
+          </ScrollView>
+          <View style={styles.inputRow}>
+              <TextInput
+                style={styles.input}
+                placeholder="Preço de custo"
+                value={precoCusto}
+                onChangeText={setPrecoCusto}
+                keyboardType="numeric"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Preço à venda"
+                value={precoVenda}
+                onChangeText={setPrecoVenda}
+                keyboardType="numeric"
+              />
+            </View>
+        </View>
+      )}
       <TouchableOpacity style={styles.button} onPress={pickImageAsync}>
         <Text style={styles.buttonText}>Incluir imagem</Text>
       </TouchableOpacity>
@@ -96,15 +107,15 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 12,
     alignItems: 'center',
-    marginTop: 24,
     paddingHorizontal: 112,
+    marginTop: -80,
   },
-  buttonFinalizar:{
+  buttonFinalizar: {
     backgroundColor: '#2D6A4F',
     paddingVertical: 12,
     borderRadius: 12,
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 8,
     paddingHorizontal: 136,
   },
   buttonText: {
@@ -113,19 +124,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   image: {
-    marginTop: 100,
     width: 320,
     height: 440,
     borderRadius: 18,
     margin: 5,
   },
   imageContainer: {
-    alignItems: 'center',
+    marginTop: 10,
   },
   inputRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 8,
   },
   input: {
     width: 135,
@@ -135,6 +144,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 5,
     paddingHorizontal: 10,
+    marginBottom: 120,
     backgroundColor: '#fff',
+  },
+  nomeInput: {
+    marginTop: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff',
+  },
+  scrollView: {
+    marginTop: 12,
   },
 });

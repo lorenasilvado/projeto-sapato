@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 interface Sapato{
+  nome: string;
   precoCusto: number;
   precoVenda: number;
   imagens: string[];
