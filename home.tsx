@@ -15,7 +15,7 @@ export function Home() {
                     {sapatos.map((sapato, index) =>
                     (
                         <View key={index} style={styles.informacaoTela}>
-                            <Text>Nome: {sapato.nome}</Text>
+                            <Text>Nome do sapato: {sapato.nome}</Text>
                             <Image source={sapato.imagens[0]} style={styles.image} />
                             <Text>Preço Custo: {sapato.precoCusto}</Text>
                             <Text>Preço Venda: {sapato.precoVenda}</Text>
