@@ -17,6 +17,10 @@ export function Login() {
   const [senha, setSenha] = useState('');
 
   const handleLogin = () => {
+    if (value !== 'empregador') {
+    Alert.alert('Acesso restrito', 'Apenas empregadores podem acessar esta área.');
+    return;
+  }
     if (login === 'Adm' && senha === 'Adm123') {
       navigation.navigate('Home');
     } else {
